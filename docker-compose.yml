@@ -1,0 +1,54 @@
+services:
+  traefik:
+    image: traefik:v2.10
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--entrypoints.web.address=:80"
+    ports:
+      - "80:80"
+      - "8080:8080" # Traefik Dashboard
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    networks:
+      - appnet
+
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: appdb
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - appnet
+
+  backend:
+    build: ./backend
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.backend.rule=PathPrefix(`/api`)"
+      - "traefik.http.services.backend.loadbalancer.server.port=8000"
+    depends_on:
+      - db
+    networks:
+      - appnet
+
+  frontend:
+    build: ./frontend
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.frontend.rule=PathPrefix(`/`)"
+      - "traefik.http.services.frontend.loadbalancer.server.port=3000"
+    depends_on:
+      - backend
+    networks:
+      - appnet
+
+volumes:
+  postgres_data:
+
+networks:
+  appnet: 
+    driver: bridge
