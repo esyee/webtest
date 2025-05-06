@@ -31,12 +31,12 @@ export default function NavbarWithToggleTabs() {
         
         {/* 다른 탭 버튼들 */}
         <button
-          onClick={() => handleTabClick("mes")}
+          onClick={() => handleTabClick("Test")}
           className={`px-3 py-2 font-medium rounded-none border-b-2 ${
-            activeTab === "mes" ? "border-black text-black" : "border-transparent text-gray-500"
+            activeTab === "Test" ? "border-black text-black" : "border-transparent text-gray-500"
           }`}
         >
-          mes
+          Test
         </button>
         <button
           onClick={() => handleTabClick("fmcs")}
@@ -58,27 +58,27 @@ export default function NavbarWithToggleTabs() {
 
       {/* 하위 메뉴 */}
       <div className="mt-4">
-        {activeTab === "mes" && (
+        {activeTab === "Test" && (
           <div className="flex space-x-4">
-            <Link href="/mes/serverfarm" className="px-3 py-1 bg-gray-100 rounded hover:bg-gray-200">
-              serverfarm
+            <Link href="/excel" className="px-3 py-1 bg-gray-100 rounded hover:bg-gray-200">
+              Excel
             </Link>
-            <Link href="/mes/line" className="px-3 py-1 bg-gray-100 rounded hover:bg-gray-200">
-              line
+            <Link href="/mes/dbserverfarm" className="px-3 py-1 bg-gray-100 rounded hover:bg-gray-200">
+              Line with App and DB Serverfarm
             </Link>
           </div>
         )}
         {activeTab === "fmcs" && (
           <div className="flex space-x-4">
             <Link href="/fmcs" className="px-3 py-1 bg-gray-100 rounded hover:bg-gray-200">
-              fmcs 메인
+              FMCS 메인 테스트용
             </Link>
           </div>
         )}
         {activeTab === "cloud" && (
           <div className="flex space-x-4">
             <Link href="/cloud" className="px-3 py-1 bg-gray-100 rounded hover:bg-gray-200">
-              cloud 메인
+              Cloud 메인 테스트용
             </Link>
           </div>
         )}
